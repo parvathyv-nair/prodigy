@@ -1,0 +1,36 @@
+import re
+
+def password_complexity_checker(password):
+    length = len(password)
+    has_upper = any(char.isupper() for char in password)
+    has_lower = any(char.islower() for char in password)
+    has_digit = any(char.isdigit() for char in password)
+    has_special = bool(re.search(r"[!@#$%^&*()_+=\[\]{};:\|,.<>?]", password))
+
+    complexity_score = 0
+
+    if length >= 8:
+        complexity_score += 1
+    if has_upper:
+        complexity_score += 1
+    if has_lower:
+        complexity_score += 1
+    if has_digit:
+        complexity_score += 1
+    if has_special:
+        complexity_score += 1
+
+    if complexity_score < 3:
+        return "Weak"
+    elif complexity_score < 5:
+        return "Moderate"
+    else:
+        return "Strong"
+
+def main():
+    password = input("Enter your password: ")
+    strength = password_complexity_checker(password)
+    print("Password strength:", strength)
+
+if __name__ == "__main__":
+    main()
